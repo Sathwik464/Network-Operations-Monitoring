@@ -1,0 +1,46 @@
+#!/bin/bash
+# ===============================================
+#  System Health Monitoring Script
+#  Author: Sathwik K
+#  Description: Monitors CPU, Memory, Disk usage,
+#               and logs the results with timestamps.
+# ===============================================
+
+LOG_DIR="./logs"
+mkdir -p "$LOG_DIR"
+
+CPU_LOG="$LOG_DIR/cpu_usage.log"
+MEM_LOG="$LOG_DIR/memory_usage.log"
+DISK_LOG="$LOG_DIR/disk_usage.log"
+SUMMARY_LOG="$LOG_DIR/system_summary.log"
+
+timestamp() {
+    date +"%Y-%m-%d %H:%M:%S"
+}
+
+echo "------------------------------------------"
+echo "System Health Monitor - $(timestamp)"
+echo "------------------------------------------"
+
+# CPU Usage
+cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print 100 - $8"%"}')
+echo "$(timestamp): CPU Usage: $cpu_usage" | tee -a "$CPU_LOG"
+
+# Memory Usage
+memory_usage=$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')
+echo "$(timestamp): Memory Usage: $memory_usage" | tee -a "$MEM_LOG"
+
+# Disk Usage
+disk_usage=$(df -h / | awk 'NR==2 {print $5}')
+echo "$(timestamp): Disk Usage: $disk_usage" | tee -a "$DISK_LOG"
+
+# System Summary
+{
+    echo "====== System Summary @ $(timestamp) ======"
+    echo "CPU Usage: $cpu_usage"
+    echo "Memory Usage: $memory_usage"
+    echo "Disk Usage: $disk_usage"
+    echo "------------------------------------------"
+} >> "$SUMMARY_LOG"
+
+echo "✅ Logs updated in '$LOG_DIR/'"
