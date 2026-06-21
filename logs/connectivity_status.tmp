@@ -1,0 +1,4 @@
+Google-DNS|8.8.8.8|REACHABLE|0|28.657|OK
+Cloudflare-DNS|1.1.1.1|REACHABLE|0|25.252|OK
+Google-External|google.com|REACHABLE|0|49.835|OK
+GitHub-External|github.com|REACHABLE|0|55.578|OK

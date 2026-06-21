@@ -1,0 +1,1 @@
+2026-06-21 18:00:08 | P1 | REDISTRIBUTION | ACTION: Confirm OSPF is healthy first (redistribution depends on it), then verify 'redistribute ospf' and route-map policy are still present in BGP config. | ESCALATION: Immediate escalation - page on-call, treat as active outage until confirmed otherwise.
